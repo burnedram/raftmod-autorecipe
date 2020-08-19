@@ -6,6 +6,8 @@ Check it out on [RaftModding](https://www.raftmodding.com/mods/autorecipe)
 Put down a cooking pot, and place some recipes near it, preferably on the cooking pot's included board.  
 Interact with the recipes to prepare them and start cooking them.
 
+Fully multiplayer compatible, your friends does not need this mod for you to enjoy it.
+
 ## What does it (not) do?
 This is a quality of life mod, it does not alter or cheat the original gameplay:
 * You still need all the ingredients in your inventory
