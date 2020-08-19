@@ -5,7 +5,8 @@
 :: Defining the window title
 title RML Mod Build Script
 :: Retrieving the current folder name
-for %%* in (.) do set foldername=%%~n*
+::for %%* in (.) do set foldername=%%~n*
+set foldername=AutoRecipe
 :: Creating a folder to contain temporary files for the build
 mkdir "build"
 :: Copying the solution directory in the "build" folder except ".csproj, .rmod" files and "bin, obj" folders.
