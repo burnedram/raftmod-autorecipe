@@ -100,7 +100,7 @@ public class AutoRecipeBehaviour : MonoBehaviour, IRaycastable
 
         if (wrongOrFreeSlots.Count != unpreparedIngredients.Count)
         {
-            Debug.Log($"There are {wrongOrFreeSlots.Count} slots that should be replaced, but there is actually {unpreparedIngredients.Count} items that needs to be placed");
+            Debug.Log($"{recipeName}: There are {wrongOrFreeSlots.Count} slots that should be replaced, but there is actually {unpreparedIngredients.Count} items that needs to be placed");
             displayText.ShowText($"{recipeName}\nUnable to auto-prepare, check logs", 0, true, 0);
             return;
         }
@@ -133,7 +133,13 @@ public class AutoRecipeBehaviour : MonoBehaviour, IRaycastable
                 if (slot.HasItem)
                     slot.OnPickupItem(cookingPot.localPlayer, slot, slot.CurrentItem);
 
-                slot.OnInsertItem(cookingPot.localPlayer, slot, item);
+                if (!Traverse.Create(slot).Field<ItemObjectEnabler>("objectEnabler").Value.DoesAcceptItem(item))
+                    Debug.Log($"{recipeName}: The item \"{item.UniqueName}\" can not be placed in cooking pot slot");
+                else
+                {
+                    var itemInstance = new ItemInstance(item, 1, item.MaxUses);
+                    slot.OnInsertItem(cookingPot.localPlayer, slot, itemInstance);
+                }
             }
             ClearPreparation();
         }

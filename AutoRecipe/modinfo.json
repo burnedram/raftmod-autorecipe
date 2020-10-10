@@ -2,7 +2,7 @@
   "name": "AutoRecipe",
   "author": "burnedram",
   "description": "Enables recipes to prepare themselves, no more scrolling through your inventory to find the right ingredients!",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "license": "MIT",
   "icon": "icon.jpg",
   "banner": "banner.jpg",
