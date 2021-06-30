@@ -14,12 +14,12 @@ public class AutoRecipeBehaviour : MonoBehaviour, IRaycastable
     public bool IsKill { get; private set; } = false;
 
     private DisplayTextManager displayText;
-    private CookingPot_Recipe_UI recipeUI;
+    private CookingTable_Recipe_UI recipeUI;
 
-    private CookingPot cookingPot;
+    private CookingTable_Pot cookingPot;
 
     private bool preparationCalculated = false;
-    private List<CookingPot_Slot> wrongOrFreeSlots = new List<CookingPot_Slot>();
+    private List<CookingTable_Slot> wrongOrFreeSlots = new List<CookingTable_Slot>();
     private List<Item_Base> unpreparedIngredients = new List<Item_Base>();
     private Dictionary<TextMeshProUGUI, Color> originalTMPLabelColors = new Dictionary<TextMeshProUGUI, Color>();
     private Dictionary<Text, Color> originalLabelColors = new Dictionary<Text, Color>();
@@ -31,7 +31,7 @@ public class AutoRecipeBehaviour : MonoBehaviour, IRaycastable
         if (IsKill)
             return;
 
-        recipeUI = GetComponent<CookingPot_Recipe_UI>();
+        recipeUI = GetComponent<CookingTable_Recipe_UI>();
         SetCookingPot(FindClosestCookingPot());
         Instances.Add(this);
     }
@@ -161,13 +161,13 @@ public class AutoRecipeBehaviour : MonoBehaviour, IRaycastable
             displayText.HideDisplayTexts();
     }
 
-    private CookingPot FindClosestCookingPot()
+    private CookingTable_Pot FindClosestCookingPot()
     {
         float sqrMag = float.MaxValue;
-        CookingPot cookingPot = null;
+        CookingTable_Pot cookingPot = null;
         foreach (var block in BlockCreator.GetPlacedBlocks())
         {
-            var candidate = block.GetComponent<CookingPot>();
+            var candidate = block.GetComponent<CookingTable_Pot>();
             if (candidate == null || !Traverse.Create(candidate).Field<bool>("hasBeenPlaced").Value)
                 continue;
 
@@ -182,7 +182,7 @@ public class AutoRecipeBehaviour : MonoBehaviour, IRaycastable
         return cookingPot;
     }
 
-    public void OnCookingPotPlaced(CookingPot newCookingPot)
+    public void OnCookingPotPlaced(CookingTable_Pot newCookingPot)
     {
         if (IsKill)
             return;
@@ -194,7 +194,7 @@ public class AutoRecipeBehaviour : MonoBehaviour, IRaycastable
             SetCookingPot(newCookingPot);
     }
 
-    public void OnCookingPotRemoved(CookingPot oldCookingPot)
+    public void OnCookingPotRemoved(CookingTable_Pot oldCookingPot)
     {
         if (IsKill)
             return;
@@ -205,7 +205,7 @@ public class AutoRecipeBehaviour : MonoBehaviour, IRaycastable
         SetCookingPot(null);
     }
 
-    private void SetCookingPot(CookingPot newCookingPot)
+    private void SetCookingPot(CookingTable_Pot newCookingPot)
     {
         cookingPot = newCookingPot;
         ClearPreparation();
@@ -272,7 +272,7 @@ public class AutoRecipeBehaviour : MonoBehaviour, IRaycastable
         ClearPreparation();
     }
 
-    public void OnCookingPotSlotItemChanged(CookingPot_Slot slot)
+    public void OnCookingPotSlotItemChanged(CookingTable_Slot slot)
     {
         if (IsKill || cookingPot == null || !cookingPot.Slots.Contains(slot))
             return;

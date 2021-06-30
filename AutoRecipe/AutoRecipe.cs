@@ -15,7 +15,7 @@ public class AutoRecipe : Mod
         foreach (var autoRecipe in FindObjectsOfType<AutoRecipeBehaviour>())
             autoRecipe.Kill();
 
-        foreach (var comp in FindObjectsOfType<CookingPot_Recipe_UI>())
+        foreach (var comp in FindObjectsOfType<CookingTable_Recipe_UI>())
         {
             if (BlockCreator.GetPlacedBlocks().Contains(comp.GetComponent<Block>()))
                 comp.gameObject.AddComponent<AutoRecipeBehaviour>();
@@ -41,21 +41,21 @@ public class AutoRecipe : Mod
         [HarmonyPatch(typeof(Block), "OnFinishedPlacement")]
         public static void Block_OnFinishedPlacement_Postfix(Block __instance)
         {
-            if (__instance.GetComponent<CookingPot_Recipe_UI>() != null && __instance.GetComponents<AutoRecipeBehaviour>().All(ar => ar.IsKill))
+            if (__instance.GetComponent<CookingTable_Recipe_UI>() != null && __instance.GetComponents<AutoRecipeBehaviour>().All(ar => ar.IsKill))
                 __instance.gameObject.AddComponent<AutoRecipeBehaviour>();
         }
 
         [HarmonyPostfix]
-        [HarmonyPatch(typeof(CookingPot), "OnBlockPlaced")]
-        public static void CookingPot_OnBlockPlaced_Postfix(CookingPot __instance)
+        [HarmonyPatch(typeof(CookingTable_Pot), "OnBlockPlaced")]
+        public static void CookingPot_OnBlockPlaced_Postfix(CookingTable_Pot __instance)
         {
             foreach (var autoRecipe in AutoRecipeBehaviour.Instances)
                 autoRecipe.OnCookingPotPlaced(__instance);
         }
 
         [HarmonyPostfix]
-        [HarmonyPatch(typeof(CookingPot), "OnDestroy")]
-        public static void CookingPot_OnDestroy_Postfix(CookingPot __instance)
+        [HarmonyPatch(typeof(CookingTable), "OnDestroy")]
+        public static void CookingPot_OnDestroy_Postfix(CookingTable_Pot __instance)
         {
             if (!Traverse.Create(__instance).Field<bool>("hasBeenPlaced").Value)
                 return;
@@ -73,16 +73,16 @@ public class AutoRecipe : Mod
         }
 
         [HarmonyPostfix]
-        [HarmonyPatch(typeof(CookingPot_Slot), "ClearItem")]
-        public static void CookingPot_Slot_ClearItem_Postfix(CookingPot_Slot __instance)
+        [HarmonyPatch(typeof(CookingTable_Slot), "ClearItem")]
+        public static void CookingPot_Slot_ClearItem_Postfix(CookingTable_Slot __instance)
         {
             foreach (var autoRecipe in AutoRecipeBehaviour.Instances)
                 autoRecipe.OnCookingPotSlotItemChanged(__instance);
         }
 
         [HarmonyPostfix]
-        [HarmonyPatch(typeof(CookingPot_Slot), "InsertItem")]
-        public static void CookingPot_Slot_InsertItem_Postfix(CookingPot_Slot __instance)
+        [HarmonyPatch(typeof(CookingTable_Slot), "InsertItem")]
+        public static void CookingPot_Slot_InsertItem_Postfix(CookingTable_Slot __instance)
         {
             foreach (var autoRecipe in AutoRecipeBehaviour.Instances)
                 autoRecipe.OnCookingPotSlotItemChanged(__instance);
