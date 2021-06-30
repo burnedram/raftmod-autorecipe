@@ -1,12 +1,12 @@
 {
   "name": "AutoRecipe",
-  "author": "burnedram",
+  "author": "burnedram-dcsobral",
   "description": "Enables recipes to prepare themselves, no more scrolling through your inventory to find the right ingredients!",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "license": "MIT",
   "icon": "icon.jpg",
   "banner": "banner.jpg",
-  "gameVersion": "11a",
+  "gameVersion": "13",
   "updateUrl": "https://www.raftmodding.com/api/v1/mods/autorecipe/version.txt",
   "isModPermanent": false,
   "excludedFiles": []
