@@ -116,6 +116,19 @@ public class AutoRecipeBehaviour : MonoBehaviour, IRaycastable
                 displayText.ShowText($"{recipeName}\nStart cooking", MyInput.Keybinds["Interact"].MainKey, 0, 0, true);
                 if (MyInput.GetButtonDown("Interact"))
                 {
+                    //Check if any of the ingredients are milk buckets, if they are return an empty bucket to the player
+                    
+                    List<CookingTable_Slot> cookingTableSlots = new List<CookingTable_Slot>();
+                    cookingTableSlots.AddRange(this.cookingPot.Slots);
+
+                    foreach (CookingTable_Slot slot in cookingTableSlots)
+                    {
+                        if (slot.CurrentItem.UniqueName == "Bucket_Milk")
+                        {
+                            RAPI.GetLocalPlayer().Inventory.AddItem(ItemManager.GetItemByName("Bucket").UniqueName, 1);
+                        }
+                    }
+                    
                     Traverse.Create(cookingPot).Method("HandleStartCooking").GetValue();
                     ClearPreparation();
                 }
