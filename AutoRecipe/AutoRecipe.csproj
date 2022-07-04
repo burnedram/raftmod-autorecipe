@@ -36,7 +36,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="AutoRecipe.cs" />
+    <Compile Include="AutoRecipeRedux.cs" />
     <Compile Include="AutoRecipeBehaviour.cs" />
   </ItemGroup>
   <ItemGroup>
